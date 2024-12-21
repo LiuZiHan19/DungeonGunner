@@ -18,6 +18,6 @@ public class GameResources : MonoBehaviour
             return instance;
         }
     }
-
+ 
     [Header("Dungeon")] public RoomNodeTypeListSO roomNodeTypeList;
 }
