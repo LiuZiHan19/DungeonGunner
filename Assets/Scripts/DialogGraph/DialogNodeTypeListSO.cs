@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DialogTypeListSO", menuName = "Scriptable Objects/Dungeon/Dialog Node Type List")]
+[CreateAssetMenu(fileName = "DialogTypeListSO", menuName = "Scriptable Objects/Dialog/Dialog Node Type List")]
 public class DialogNodeTypeListSO : ScriptableObject
 {
     public List<DialogNodeTypeSO> list;

@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Room node type
+/// </summary>
 [CreateAssetMenu(fileName = "RoomNodeType_", menuName = "Scriptable Objects/Dungeon/Room Node Type", order = 2)]
 public class RoomNodeTypeSO : ScriptableObject
 {

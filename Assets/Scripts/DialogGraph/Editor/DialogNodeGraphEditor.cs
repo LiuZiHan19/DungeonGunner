@@ -4,7 +4,30 @@ using UnityEngine;
 
 public class DialogNodeGraphEditor : EditorWindow
 {
+    private GUIStyle dialogNodeStyle;
     private static DialogNodeGraphSO currentDialogNodeGraph;
+    private static DialogNodeTypeListSO dialogNodeTypeList;
+
+    private const float nodeWidth = 160f;
+    private const float nodeHeight = 75f;
+    private const int nodePadding = 25;
+    private const int nodeBorder = 12;
+
+    private void OnEnable()
+    {
+        dialogNodeStyle = new GUIStyle
+        {
+            normal =
+            {
+                background = EditorGUIUtility.Load("Node1") as Texture2D,
+                textColor = Color.white
+            },
+            padding = new RectOffset(nodePadding, nodePadding, nodePadding, nodePadding),
+            border = new RectOffset(nodeBorder, nodeBorder, nodeBorder, nodeBorder)
+        };
+
+        dialogNodeTypeList = GameResources.Instance.dialogNodeTypeList;
+    }
 
     [MenuItem("Dialog Graph Editor", menuItem = "Window/Dungeon Editor/Dialog Graph Editor")]
     private static void OpenWindow()
@@ -32,8 +55,15 @@ public class DialogNodeGraphEditor : EditorWindow
         if (currentDialogNodeGraph != null)
         {
             ProcessEvents(Event.current);
+
+            DrawRoomNodes();
         }
+
+        if (GUI.changed)
+            Repaint();
     }
+
+    #region Process Events
 
     private void ProcessEvents(Event currentEvent)
     {
@@ -53,14 +83,49 @@ public class DialogNodeGraphEditor : EditorWindow
         }
     }
 
+    #endregion
+
+    #region Context Menu
+
     private void ShowContextMenu(Vector2 mousePosition)
     {
-        GenericMenu menu = new GenericMenu(); // 创建一个菜单
+        GenericMenu menu = new GenericMenu();
 
-        // 向菜单中添加创建房间节点的选项
-        menu.AddItem(new GUIContent("Create Dialog Node"), false, null, mousePosition);
+        menu.AddItem(new GUIContent("Create Dialog Node"), false, CreateDialogNode, mousePosition);
 
-        // 显示菜单
         menu.ShowAsContext();
+    }
+
+    private void CreateDialogNode(object mousePositionObj)
+    {
+        CreateDialogNode(mousePositionObj, dialogNodeTypeList.list.Find(x => x.isNone));
+    }
+
+    private void CreateDialogNode(object mousePositionObj, DialogNodeTypeSO roomNodeType)
+    {
+        Vector2 mousePosition = (Vector2)mousePositionObj;
+
+        DialogNodeSO roomNode = ScriptableObject.CreateInstance<DialogNodeSO>();
+
+        currentDialogNodeGraph.dialogNodeList.Add(roomNode);
+
+        roomNode.Initialise(new Rect(mousePosition, new Vector2(nodeWidth, nodeHeight)), currentDialogNodeGraph,
+            roomNodeType);
+
+        AssetDatabase.AddObjectToAsset(roomNode, currentDialogNodeGraph);
+
+        AssetDatabase.SaveAssets();
+    }
+
+    #endregion
+
+    private void DrawRoomNodes()
+    {
+        foreach (var roomNode in currentDialogNodeGraph.dialogNodeList)
+        {
+            roomNode.Draw(dialogNodeStyle);
+        }
+
+        GUI.changed = true;
     }
 }

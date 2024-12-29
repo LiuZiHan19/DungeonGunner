@@ -20,4 +20,5 @@ public class GameResources : MonoBehaviour
     }
  
     [Header("Dungeon")] public RoomNodeTypeListSO roomNodeTypeList;
+    [Header("Dialog")] public DialogNodeTypeListSO dialogNodeTypeList;
 }

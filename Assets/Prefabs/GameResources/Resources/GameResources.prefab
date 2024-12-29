@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomNodeTypeList: {fileID: 11400000, guid: 02cf8b8ea7da6b64bb56efcf141b2f04, type: 2}
+  dialogNodeTypeList: {fileID: 11400000, guid: b22477d0c6bf50c4ab787a1794a22f4b, type: 2}

@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6e70926db3e4c4db37cc557e8e2d67, type: 3}
+  m_Name: DialogNodeGraphSO
+  m_EditorClassIdentifier: 
+  dialogNodeTypeList: {fileID: 0}
+  dialogNodeList:
+  - {fileID: 6655798043581848784}
+  - {fileID: 6998158192771841949}
+--- !u!114 &6655798043581848784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a22be201381832045a615251cba212e0, type: 3}
+  m_Name: DialogNode
+  m_EditorClassIdentifier: 
+  id: 25510838-1aff-4a63-a1c9-c0139f89ebdb
+  parentDialogNodeIDList: []
+  childDialogNodeIDList: []
+  dialogNodeGraph: {fileID: 11400000}
+  dialogNodeTypeList: {fileID: 11400000, guid: b22477d0c6bf50c4ab787a1794a22f4b, type: 2}
+  dialogNodeType: {fileID: 11400000, guid: 3e26cc7842469554eb1ea72cdc0ee07f, type: 2}
+  rect:
+    serializedVersion: 2
+    x: 299
+    y: 133
+    width: 160
+    height: 75
+--- !u!114 &6998158192771841949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a22be201381832045a615251cba212e0, type: 3}
+  m_Name: DialogNode
+  m_EditorClassIdentifier: 
+  id: 6d593007-3956-4981-a741-024de803906c
+  parentDialogNodeIDList: []
+  childDialogNodeIDList: []
+  dialogNodeGraph: {fileID: 11400000}
+  dialogNodeTypeList: {fileID: 11400000, guid: b22477d0c6bf50c4ab787a1794a22f4b, type: 2}
+  dialogNodeType: {fileID: 11400000, guid: 17f1487ddd5b55e48bcd32795e77c433, type: 2}
+  rect:
+    serializedVersion: 2
+    x: 410
+    y: 91
+    width: 160
+    height: 75
