@@ -20,6 +20,8 @@ public class RoomNodeSO : ScriptableObject
 #if UNITY_EDITOR
 
     [HideInInspector] public Rect rect;
+    [HideInInspector] public bool isLeftClickDragging;
+    [HideInInspector] public bool isSelected;
 
     public void Initialise(Rect rect, RoomNodeGraphSO nodeGraph, RoomNodeTypeSO roomNodeType)
     {
@@ -63,6 +65,71 @@ public class RoomNodeSO : ScriptableObject
         }
 
         return roomNodeTypes;
+    }
+
+    public void ProcessEvent(Event currentEvent)
+    {
+        switch (currentEvent.type)
+        {
+            case EventType.MouseDown:
+                ProcessMouseDownEvent(currentEvent);
+                break;
+            case EventType.MouseUp:
+                ProcessMouseUpEvent(currentEvent);
+                break;
+            case EventType.MouseDrag:
+                ProcessMouseDragEvent(currentEvent);
+                break;
+        }
+    }
+
+    private void ProcessMouseDragEvent(Event currentEvent)
+    {
+        if (currentEvent.button == 0)
+        {
+            ProcessLeftDragEvent(currentEvent);
+        }
+    }
+
+    private void ProcessLeftDragEvent(Event currentEvent)
+    {
+        isLeftClickDragging = true;
+        DragNode(currentEvent.delta);
+        GUI.changed = true;
+    }
+
+    private void DragNode(Vector2 currentEventDelta)
+    {
+        rect.position += currentEventDelta;
+        // EditorUtility.SetDirty(this) 是 Unity 编辑器脚本中的一个方法，用于标记一个对象为“脏”（dirty），
+        // 意思是这个对象已经被修改了，需要重新保存或更新。
+        EditorUtility.SetDirty(this);
+    }
+ 
+    private void ProcessMouseUpEvent(Event currentEvent)
+    {
+        if (currentEvent.button == 0)
+        {
+            isLeftClickDragging = false;
+        }
+    }
+
+    private void ProcessMouseDownEvent(Event currentEvent)
+    {
+        if (currentEvent.button == 0)
+        {
+            ProcessLeftClickEvent();
+        }
+    }
+
+    private void ProcessLeftClickEvent()
+    {
+        Selection.activeObject = this;
+            
+        if (isSelected)
+            isSelected = false;
+        else
+            isSelected = true;
     }
 
 #endif

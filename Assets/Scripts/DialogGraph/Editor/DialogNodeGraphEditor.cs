@@ -7,6 +7,7 @@ public class DialogNodeGraphEditor : EditorWindow
     private GUIStyle dialogNodeStyle;
     private static DialogNodeGraphSO currentDialogNodeGraph;
     private static DialogNodeTypeListSO dialogNodeTypeList;
+    private DialogNodeSO currentDialogNode;
 
     private const float nodeWidth = 160f;
     private const float nodeHeight = 75f;
@@ -66,6 +67,36 @@ public class DialogNodeGraphEditor : EditorWindow
     #region Process Events
 
     private void ProcessEvents(Event currentEvent)
+    {
+        if (currentDialogNode == null || currentDialogNode.isLeftClickDragging == false)
+        {
+            currentDialogNode = IsMouseOverDialogNode(currentEvent);
+        }
+
+        if (currentDialogNode == null)
+        {
+            ProcessDialogNodeGraphEvent(currentEvent);
+        }
+        else
+        {
+            currentDialogNode.ProcessEvent();
+        }
+    }
+
+    private DialogNodeSO IsMouseOverDialogNode(Event currentEvent)
+    {
+        for (int i = currentDialogNodeGraph.dialogNodeList.Count - 1; i > -1; i--)
+        {
+            if (currentDialogNodeGraph.dialogNodeList[i].rect.Contains(currentEvent.mousePosition))
+            {
+                return currentDialogNodeGraph.dialogNodeList[i];
+            }
+        }
+
+        return null;
+    }
+
+    private void ProcessDialogNodeGraphEvent(Event currentEvent)
     {
         switch (currentEvent.type)
         {

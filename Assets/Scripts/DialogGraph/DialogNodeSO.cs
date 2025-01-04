@@ -17,6 +17,7 @@ public class DialogNodeSO : ScriptableObject
 #if UNITY_EDITOR
 
     [HideInInspector] public Rect rect;
+    [HideInInspector] public bool isLeftClickDragging;
 
     public void Initialise(Rect rect, DialogNodeGraphSO nodeGraph, DialogNodeTypeSO dialogNodeType)
     {
@@ -60,6 +61,11 @@ public class DialogNodeSO : ScriptableObject
         }
 
         return roomNodeTypes;
+    }
+
+    public void ProcessEvent()
+    {
+        
     }
 
 #endif
