@@ -18,7 +18,7 @@ public class RoomNodeGraphEditor : EditorWindow
 
     private Vector2 graphDrag;
     private Vector2 graphOffset;
-    
+
     // G rid spacing
     private const float gridLarge = 100f;
     private const float gridSmall = 25;
@@ -50,7 +50,7 @@ public class RoomNodeGraphEditor : EditorWindow
 
         roomNodeTypeList = GameResources.Instance.roomNodeTypeList;
     }
- 
+
     private void OnDisable()
     {
         Selection.selectionChanged = InspectorSelectionChanged;
@@ -87,9 +87,9 @@ public class RoomNodeGraphEditor : EditorWindow
     {
         if (currentRoomNodeGraph != null)
         {
-            // DrawBackgroundGrid(gridSmall, 0.2f, Color.gray);
-            // DrawBackgroundGrid(gridLarge, 0.2f, Color.gray);
-            
+            DrawBackgroundGrid(gridSmall, 0.2f, Color.gray);
+            DrawBackgroundGrid(gridLarge, 0.2f, Color.gray);
+
             DrawDraggedLine();
 
             ProcessEvents(Event.current); // Process events
@@ -103,12 +103,38 @@ public class RoomNodeGraphEditor : EditorWindow
             Repaint();
     }
 
+    private void DrawBackgroundGrid(float gridSize, float girdOpacity, Color gridColor)
+    {
+        int verticalLineCount = Mathf.CeilToInt((position.width + gridSize) / gridSize);
+        int horizontalLineCount = Mathf.CeilToInt((position.height + gridSize) / gridSize);
+
+        Handles.color = new Color(gridColor.r, gridColor.g, gridColor.b, girdOpacity);
+
+        graphOffset += graphDrag * 0.5f;
+
+        Vector3 gridOffset = new Vector3(graphOffset.x % gridSize, graphOffset.y % gridSize, 0);
+
+        for (int i = 0; i < verticalLineCount; i++)
+        {
+            Handles.DrawLine(new Vector3(gridSize * i, -gridSize, 0) + gridOffset,
+                new Vector3(gridSize * i, position.height + gridSize, 0) + gridOffset);
+        }
+
+        for (int i = 0; i < horizontalLineCount; i++)
+        {
+            Handles.DrawLine(new Vector3(-gridSize, gridSize * i, 0) + gridOffset,
+                new Vector3(position.width + gridSize, gridSize * i, 0) + gridOffset);
+        }
+
+        Handles.color = Color.white;
+    }
+
     #region Process Event
 
-    private void  ProcessEvents(Event currentEvent)
+    private void ProcessEvents(Event currentEvent)
     {
-        graphDrag = Vector2.zero; 
-        
+        graphDrag = Vector2.zero;
+
         // 如果当前节点为空或者当前节点不在左击拖拽中就检查鼠标在那个节点上面
         if (currentRoomNode == null || currentRoomNode.isLeftClickDragging == false)
         {
@@ -182,10 +208,10 @@ public class RoomNodeGraphEditor : EditorWindow
         {
             currentRoomNodeGraph.roomNodeList[i].DragNode(dragDelta);
         }
-        
+
         GUI.changed = true;
     }
- 
+
     private void ProcessRightClickMouseDragging(Event currentEvent)
     {
         if (currentRoomNodeGraph.roomNodeToDrawLineFrom != null)
