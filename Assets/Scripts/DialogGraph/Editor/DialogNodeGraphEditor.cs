@@ -50,7 +50,7 @@ public class DialogNodeGraphEditor : EditorWindow
 
         return false;
     }
-
+    
     private void OnGUI()
     {
         if (currentDialogNodeGraph != null)
